@@ -1,0 +1,7 @@
+project                  = "[your project id here]"
+project_number           = "[your project number here]"
+credentials_secret       = "[path to your terraform service acct secret credentials in GCP here]"
+lookersdk_base_url       = "[path to your Looker instance base url here]"
+auth_service_acct_name   = "[token server service account name]"
+github_acct              = "[github account name hosting the token server codebase]"
+github_repo              = "[github repo name hosting the token server codebase]"
