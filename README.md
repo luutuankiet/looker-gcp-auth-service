@@ -2,7 +2,7 @@
 
 ### GCP Installation Tutorial:
 
-
+[Click here for an in depth article on installing this project.](https://medium.com/4mile-analytics/how-to-access-gcp-services-from-lookers-extension-framework-c8ba1b615867)
 
 ### Local Installation Instructions:
 
