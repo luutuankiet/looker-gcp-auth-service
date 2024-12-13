@@ -1,0 +1,7 @@
+project                  = "joon-sandbox"
+project_number           = "167078852774"
+credentials_secret       = "projects/136420034762/secrets/terraform-service-creds-ken/versions/1"
+lookersdk_base_url       = "https://joonpartner.cloud.looker.com"
+auth_service_acct_name   = "explore-assistant-ken-dev"
+github_acct              = "luutuankiet"
+github_repo              = "looker-gcp-auth-service"

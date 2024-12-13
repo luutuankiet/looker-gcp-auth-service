@@ -1,12 +1,12 @@
 variable "region" {
   type        = string
-  default     = "us-central1"
+  default     = "asia-southeast1"
   description = "The region where the token service will reside."
 }
 
 variable "zone" {
   type        = string
-  default     = "us-central1-c"
+  default     = "asia-southeast1-a"
   description = "The zone where the token service will reside."
 }
 

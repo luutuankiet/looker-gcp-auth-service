@@ -64,42 +64,42 @@ resource "google_project_service" "container" {
 # Remove its comments after the first terraform run. It relies on the Cloud Build service to exist,
 # because it builds the container image the token service relies on.
 
-# resource "google_cloud_run_service" "looker_gcp_auth_service" {
-#   name = var.service
-#   location = var.region
+resource "google_cloud_run_service" "looker_gcp_auth_service" {
+  name = var.service
+  location = var.region
 
-#   template {
-#     spec {
-#       service_account_name = local.auth_serviceaccount
-#       containers {
-#         # this image is built by the Cloud Build job
-#         image = "gcr.io/${var.project}/${var.service}:${var.app_version}"
-#       }
-#     }
-#   }
+  template {
+    spec {
+      service_account_name = local.auth_serviceaccount
+      containers {
+        # this image is built by the Cloud Build job
+        image = "gcr.io/${var.project}/${var.service}:${var.app_version}"
+      }
+    }
+  }
 
 #   # Waits for the Cloud Run API to be enabled
-#   depends_on = [google_project_service.run_api]
-# }
+  depends_on = [google_project_service.run_api]
+}
 
 # Create public access for our cloud run service
 # Auth will be handled internally via the service & Looker
-# data "google_iam_policy" "noauth" {
-#   binding {
-#     role = "roles/run.invoker"
-#     members = [
-#       "allUsers",
-#     ]
-#   }
-# }
+data "google_iam_policy" "noauth" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers",
+    ]
+  }
+}
 
 # Enables public access on Cloud Run service
-# resource "google_cloud_run_service_iam_policy" "noauth" {
-#   location    = google_cloud_run_service.looker_gcp_auth_service.location
-#   project     = var.project
-#   service     = google_cloud_run_service.looker_gcp_auth_service.name
-#   policy_data = data.google_iam_policy.noauth.policy_data
-# }
+resource "google_cloud_run_service_iam_policy" "noauth" {
+  location    = google_cloud_run_service.looker_gcp_auth_service.location
+  project     = var.project
+  service     = google_cloud_run_service.looker_gcp_auth_service.name
+  policy_data = data.google_iam_policy.noauth.policy_data
+}
 
 # This creates the cloud build trigger that runs on pushes to the main branch of the github repo 
 # storing the token service project.
@@ -185,6 +185,7 @@ resource "google_cloudbuild_trigger" "deploy_main" {
     # This build kit option caches any artifacts of the build that can be reused on subsequent runs. 
     options {
       env = ["DOCKER_BUILDKIT=1"]
+      logging = "CLOUD_LOGGING_ONLY"
     }
   }
 }
